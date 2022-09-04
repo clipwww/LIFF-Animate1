@@ -17,6 +17,24 @@ export async function getList(keyword = '') {
 }
 
 /**
+ * [GET] 取得近期更新
+ */
+ export async function getRecentUpdated(keyword = '') {
+  return axiosInstace.get<ResultListGenericVM<{
+    "id": string
+    "link": string
+    "name": string
+    "imgUrl": string
+    "description": string
+  }>>(baseURL, {
+    params: {
+      keyword,
+      mode: 'update'
+    }
+  })
+}
+
+/**
  * [GET] 取得動畫明細
  */
 export async function getDetails(id: string) {

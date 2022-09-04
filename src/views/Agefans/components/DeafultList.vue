@@ -7,29 +7,33 @@
     </template>
     <Cell
       v-else
-      v-for="item in filterList"
+      v-for="item in list"
       :key="item.id"
       :title="item.name"
+      :label="item.description"
       size="large"
       is-link
       center
       :to="{ name: 'AgefansDetails', params: { id: item.id } }"
     >
-      <template #label>
+      <template #icon>
+        <Image :src="item.imgUrl" class="w-16 mr-4" />
+      </template>
+      <!-- <template #label>
         <div>{{ item.namefornew }}</div>
         <div class="text-xs text-gray-500 transform scale-75 origin-left">最後更新日期: {{ item.mtime }}</div>
-      </template>
+      </template> -->
     </Cell>
 
-    <Tabbar v-model="activeWeek" fixed border safe-area-inset-bottom>
+    <!-- <Tabbar v-model="activeWeek" fixed border safe-area-inset-bottom>
       <TabbarItem v-for="item in weekdays" :key="item.value" :name="item.value">{{ item.label }}</TabbarItem>
-    </Tabbar>
+    </Tabbar> -->
   </PullRefresh>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue';
-import { PullRefresh, Cell, Skeleton, Tabbar, TabbarItem } from 'vant';
+import { PullRefresh, Cell, Skeleton, Tabbar, TabbarItem, Image } from 'vant';
 import dayjs from 'dayjs';
 
 import { agefansSVC } from '@/services';
@@ -41,6 +45,7 @@ export default defineComponent({
     Skeleton,
     Tabbar,
     TabbarItem,
+    Image,
   },
   setup() {
     const weekdays = Array(7)
@@ -70,7 +75,7 @@ export default defineComponent({
       state.refreshing = false;
       state.loading = true;
 
-      const ret = await agefansSVC.getList();
+      const ret = await agefansSVC.getRecentUpdated();
 
       state.loading = false;
       if (!ret.success) {

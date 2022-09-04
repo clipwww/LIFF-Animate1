@@ -12,7 +12,7 @@ export interface CustomAxiosResponse extends AxiosResponse {
   config: CustomAxiosRequestConfig
 }
 
-export const baseURL = 'https://mechakucha-api.herokuapp.com';
+export const baseURL = 'https://mechakucha-api.fly.dev';
 
 
 export const createAxiosInstance = () => {
